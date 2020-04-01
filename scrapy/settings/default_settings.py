@@ -136,6 +136,7 @@ FEED_TEMPDIR = None
 FEEDS = {}
 FEED_URI_PARAMS = None  # a function to extend uri arguments
 FEED_STORE_EMPTY = False
+FEED_STORAGE_BATCH = 0
 FEED_EXPORT_ENCODING = None
 FEED_EXPORT_FIELDS = None
 FEED_STORAGES = {}

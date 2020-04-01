@@ -239,6 +239,7 @@ class FeedExporter:
             uri = str(uri)  # handle pathlib.Path objects
             self.feeds[uri] = feed_complete_default_values_from_settings(feed, self.settings)
 
+        self.batch_export = self._load_components("FEED_STORAGE_BATCH")
         self.storages = self._load_components('FEED_STORAGES')
         self.exporters = self._load_components('FEED_EXPORTERS')
         for uri, feed in self.feeds.items():
@@ -263,6 +264,12 @@ class FeedExporter:
             self.slots.append(slot)
             if slot.store_empty:
                 slot.start_exporting()
+
+    def batch_file_name(self, slot, feed, spider):
+        """Generates a file name for a batch delivery of results based on the date and time of creation"""
+        uri = slot.uri
+        uri += datetime.now(datetime.timezone.utc).astimezone().isoformat()
+        return uri
 
     def close_spider(self, spider):
         deferred_list = []
